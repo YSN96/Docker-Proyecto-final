@@ -26,18 +26,13 @@ services:
       - redInterna
     container_name: backend
   frontend:
-    build: ./frontend
+    image: nginx:latest
+    ports:
+      - 8080:80
     volumes:
-      - ./frontend/dist/:/var/www/html
-    configs:
-      - source: ./frontend/apache2.conf
-        target: /etc/apache2/apache2.conf
-      - source: ./frontend/000-default.conf
-        target: /etc/apache2/sites-available/000-default.conf
+      - ./dist:/usr/share/nginx/html
     depends_on:
       - backend
-    ports:
-      - 80:80
     networks:
       - redInterna
     container_name: frontend
